@@ -8,6 +8,8 @@ const toRelativePath = (...paths: string[]): string =>
     .filter((s) => !_.isEmpty(s))
     .join("/");
 
+type Json = { [k: string]: any } | any[];
+
 export class StorageGateway {
   path: string = "";
 
@@ -20,7 +22,7 @@ export class StorageGateway {
 
   private filePath = (filename: string) => toRelativePath(this.path, filename);
 
-  save(filename: string, data: JSON): Promise<void> {
+  save(filename: string, data: Json): Promise<void> {
     return new Promise((resolve, reject) => {
       this.fs.writeFile(
         this.filePath(filename),
@@ -33,11 +35,15 @@ export class StorageGateway {
     });
   }
 
-  load(filename: string): Promise<JSON> {
+  load(filename: string, def?: Json): Promise<Json> {
     return new Promise((resolve, reject) => {
       this.fs.readFile(this.filePath(filename), (err, data) => {
-        if (err) reject(err);
-        else {
+        if (err) {
+          if (def) {
+            this.save(filename, def);
+            resolve(def);
+          } else reject(err);
+        } else {
           try {
             console.log("load data", data.toString("utf-8"));
             resolve(JSON.parse(data.toString("utf-8")));

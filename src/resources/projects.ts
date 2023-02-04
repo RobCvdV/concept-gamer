@@ -1,5 +1,5 @@
-import { Resource } from "../types/Resource";
-import { StorageGateway } from "../data/storageGateway";
+import {Resource} from "../types/Resource";
+import {StorageGateway} from "../data/StorageGateway";
 import StatusCodes from "http-status-codes";
 
 const projectStorage = () => new StorageGateway("projects");

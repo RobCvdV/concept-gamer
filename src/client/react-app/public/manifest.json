@@ -1,0 +1,9 @@
+{
+  "short_name": "Game conceptor",
+  "name": "Game concept collaboration tool",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

@@ -1,31 +1,33 @@
 import express from "express";
-import { projects } from "./resources/projects";
+import {projects} from "./resources/projects";
 import cors from "cors";
-import StatusCodes from "http-status-codes";
+import http from "http";
+import {client, clientApp} from "./client/client";
+import path from "path";
+import {SocketServer} from "./data/SocketServer";
+import {ChatGateway} from "./data/ChatGateway";
 
+const port = process.env.PORT || 8080;
 const app = express();
+const server = http.createServer(app);
+
+const socketServer = new SocketServer(server);
+export const io = socketServer.io;
+socketServer.registerService(ChatGateway);
+
+const resources = [...client, ...projects];
+
 app.use(express.json());
 app.use(cors());
+app.use(clientApp);
 
-const port = 3000;
-
-const resources = [...projects];
-//
 resources.forEach(({ method, route, handler }) => {
-  const r = route.startsWith("/") ? route : `/${route}`;
+  const r = path.join(route);
+  console.log("add route", r);
   app[method](r, handler);
 });
 
-app.post("/test/:alles", (req, res) => {
-  console.log(req);
-  res.sendStatus(StatusCodes.OK);
-});
-
-// app.get("/", (req, res) => {
-//   res.send("this is the game concept app server");
-// });
-
-app.listen(port, () => {
+server.listen(port, () => {
   console.log("This server is listening at port", port);
 });
 

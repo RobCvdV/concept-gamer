@@ -1,0 +1,16 @@
+.App {
+    text-align: center;
+}
+
+.App-content {
+    background-color: #282c34;
+    min-height: calc(100vh);
+    max-height: calc(100vh);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    /*justify-content: stretch;*/
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
