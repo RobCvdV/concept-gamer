@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.css";
 import {socket, SocketContext} from "./Providers/SocketContext";
 import {Chat} from "./components/Chat";
 import {store} from "./models/store";
@@ -17,9 +17,7 @@ function App() {
         <PersistGate persistor={persistor} loading={"loading..."}>
           <SocketContext.Provider value={socket}>
             <div className="App-content">
-              <p style={{ flex: 2 }}>
-                Edit <code>src/App.tsx</code> and save to reload.
-              </p>
+              <div>Drawing board coming here</div>
               <Chat />
             </div>
           </SocketContext.Provider>

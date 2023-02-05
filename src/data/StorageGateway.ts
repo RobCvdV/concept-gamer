@@ -20,7 +20,8 @@ export class StorageGateway {
     this.fs.mkdirSync(this.path, { recursive: true });
   }
 
-  private filePath = (filename: string) => toRelativePath(this.path, filename);
+  private filePath = (filename: string) =>
+    toRelativePath(this.path, `${filename}.json`);
 
   save(filename: string, data: Json): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -62,7 +63,7 @@ export class StorageGateway {
         else {
           try {
             console.log("load dir", names);
-            resolve(names);
+            resolve(names.map((n) => n.replace(".json", "")));
           } catch (e) {
             reject(e);
           }

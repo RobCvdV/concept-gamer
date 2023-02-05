@@ -1,23 +1,18 @@
 import {createModel} from "@rematch/core";
 import {RootModel} from "./";
 
-type ChatMessage = { who: string; msg: string; when: number };
+const initialUserState = {
+  name: "",
+};
+
+export type UserState = typeof initialUserState;
+type PartialState = Partial<UserState>;
 
 export const userModel = createModel<RootModel>()({
-  state: 0, // initial state
+  state: { ...initialUserState },
   reducers: {
-    // handle state changes with pure functions
-    increment(state, payload: number) {
-      return state + payload;
-    },
+    reset: (s, partial?: PartialState) => ({ ...initialUserState, ...partial }),
+    set: (s, partial?: PartialState) => ({ ...s, ...partial }),
   },
-  effects: (dispatch) => ({
-    // handle state changes with impure functions.
-    // use async/await for async actions
-    async incrementAsync(payload: number, state) {
-      console.log("This is current root state", state);
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      dispatch.count.increment(payload);
-    },
-  }),
+  effects: (dispatch) => ({}),
 });

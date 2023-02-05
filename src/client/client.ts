@@ -3,7 +3,13 @@ import path from "path";
 import express from "express";
 
 export const clientApp = express.static(
-  path.join(__dirname, "./react-app/build")
+  path.join(__dirname, "./react-app/build"),
+  {
+    setHeaders: (res) => {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    },
+  }
 );
 
 export const client: Resource[] = [

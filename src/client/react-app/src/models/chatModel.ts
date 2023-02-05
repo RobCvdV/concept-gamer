@@ -5,7 +5,6 @@ import {DateTime} from "luxon";
 export type ChatMessage = { who: string; msg: string; when: DateTime };
 
 const initialChatState = {
-  name: "",
   names: [] as string[],
   messages: [] as ChatMessage[],
 };

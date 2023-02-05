@@ -13,7 +13,14 @@ export type Constructor<T = unknown> = { new (io: Server): T };
 export class SocketServer {
   readonly services: ISocketService[] = [];
 
-  constructor(readonly server: http.Server, readonly io = new Server(server)) {}
+  constructor(
+    readonly server: http.Server,
+    readonly io = new Server(server, {
+      cors: {
+        origin: "*",
+      },
+    })
+  ) {}
 
   init() {
     this.io.on("connection", (socket) => {

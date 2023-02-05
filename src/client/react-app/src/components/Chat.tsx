@@ -1,9 +1,6 @@
 import React, {FC, useCallback, useRef} from "react";
 import {Input, InputRef} from "./Input";
-import {useSocket} from "../Providers/SocketContext";
 import {ChatMessageCard} from "./ChatMessageCard";
-import {DateTime} from "luxon";
-import {ChatMessage} from "../models/chatModel";
 import {ManageChats} from "../useCases/ManageChats";
 import {useModelState} from "../models/store";
 
@@ -23,31 +20,25 @@ type Props = {
 };
 
 export const Chat: FC<Props> = ({ uc = new ManageChats() }) => {
-  const socket = useSocket();
   const messageRef = useRef<HTMLDivElement>(null);
   const chatInputRef = useRef<InputRef>(null);
 
-  const { names, name, messages } = useModelState("chatModel");
+  const { names, messages } = useModelState("chatModel");
+  const { name } = useModelState("userModel");
 
   const onSubmitChat = useCallback(
     (msg: string) => {
-      console.log("chat submit", msg);
-      socket.emit("chat-message", {
-        msg,
-        who: name,
-        when: DateTime.now(),
-      } as ChatMessage);
+      msg && uc?.sendChatMessage(msg);
     },
-    [socket]
+    [uc]
   );
 
   const onSubmitName = useCallback(
     (name: string) => {
-      console.log("change name", name);
-      socket.emit("user-name", name);
+      uc?.changeName(name);
       chatInputRef.current?.focus();
     },
-    [socket]
+    [uc, chatInputRef]
   );
 
   return (
@@ -55,12 +46,23 @@ export const Chat: FC<Props> = ({ uc = new ManageChats() }) => {
       <Input
         key="name"
         label="Chat naam"
+        placeholder={name}
         onSubmit={onSubmitName}
         style={{ justifySelf: "flex-start" }}
       />
-      <div id="messages" ref={messageRef} style={{ flex: 1 }}>
-        {messages.map((msg) => (
-          <ChatMessageCard {...msg} />
+      <div
+        id="messages"
+        ref={messageRef}
+        style={{ flex: 1, overflowY: "scroll" }}
+      >
+        {messages.map(({ msg, who, when }, i) => (
+          <ChatMessageCard
+            key={i}
+            msg={msg}
+            who={who}
+            when={when}
+            isMe={who === name}
+          />
         ))}
       </div>
       <Input
