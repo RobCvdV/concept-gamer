@@ -1,8 +1,9 @@
-import React, {FC, useCallback, useRef} from "react";
+import React, {FC, UIEventHandler, useCallback, useRef, useState,} from "react";
 import {Input, InputRef} from "./Input";
 import {ChatMessageCard} from "./ChatMessageCard";
 import {ManageChats} from "../useCases/ManageChats";
 import {useModelState} from "../models/store";
+import {Button} from "react-bootstrap";
 
 const chatStyle: React.CSSProperties = {
   justifySelf: "flex-end",
@@ -19,12 +20,40 @@ type Props = {
   uc?: ManageChats;
 };
 
+const isScrollingOffset = 60;
+
 export const Chat: FC<Props> = ({ uc = new ManageChats() }) => {
-  const messageRef = useRef<HTMLDivElement>(null);
+  const [scrollingMode, setScrollingMode] = useState(0);
   const chatInputRef = useRef<InputRef>(null);
 
   const { names, messages } = useModelState("chatModel");
   const { name } = useModelState("userModel");
+
+  const userIsScrolling = useCallback<UIEventHandler<HTMLDivElement>>(
+    (ev) => {
+      const { scrollTop, scrollHeight, offsetHeight } = ev.currentTarget;
+      const distBottom = scrollHeight - offsetHeight - scrollTop;
+      console.log("offset", distBottom);
+
+      setScrollingMode((scr) => {
+        const newScr =
+          scr === 0
+            ? distBottom > isScrollingOffset
+              ? 0
+              : 1
+            : scr === 1
+            ? distBottom > isScrollingOffset
+              ? 2
+              : 1
+            : distBottom > isScrollingOffset
+            ? 2
+            : 1;
+        console.log("scroll mode", newScr);
+        return newScr;
+      });
+    },
+    [setScrollingMode]
+  );
 
   const onSubmitChat = useCallback(
     (msg: string) => {
@@ -51,20 +80,29 @@ export const Chat: FC<Props> = ({ uc = new ManageChats() }) => {
         style={{ justifySelf: "flex-start" }}
       />
       <div
-        id="messages"
-        ref={messageRef}
-        style={{ flex: 1, overflowY: "scroll" }}
+        style={{
+          overflowY: "scroll",
+          scrollBehavior: "revert",
+          maxHeight: "90%",
+        }}
+        onScroll={userIsScrolling}
       >
-        {messages.map(({ msg, who, when }, i) => (
-          <ChatMessageCard
-            key={i}
-            msg={msg}
-            who={who}
-            when={when}
-            isMe={who === name}
-          />
-        ))}
+        <div id="messages" style={{ flex: 1 }}>
+          {messages.map(({ msg, who, when }, i) => (
+            <ChatMessageCard
+              key={i}
+              msg={msg}
+              who={who}
+              when={when}
+              isMe={who === name}
+              scrollToMe={scrollingMode < 2 && messages.length - 1 === i}
+            />
+          ))}
+        </div>
       </div>
+      {scrollingMode === 2 && (
+        <Button onClick={() => setScrollingMode(0)}>VVVVV</Button>
+      )}
       <Input
         key="chat-input"
         onSubmit={onSubmitChat}
