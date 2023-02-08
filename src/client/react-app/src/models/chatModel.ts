@@ -1,5 +1,5 @@
-import {createModel} from "@rematch/core";
-import {RootModel} from "./";
+import { createModel } from "@rematch/core";
+import { RootModel } from "./";
 
 export type ChatMessage = { who: string; msg: string; when: string };
 

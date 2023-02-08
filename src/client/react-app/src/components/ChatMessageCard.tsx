@@ -1,6 +1,6 @@
-import {CSSProperties, FC, useEffect, useMemo, useRef} from "react";
-import {Card} from "react-bootstrap";
-import {DateTime} from "luxon";
+import { CSSProperties, FC, useEffect, useMemo, useRef } from "react";
+import { Card } from "react-bootstrap";
+import { DateTime } from "luxon";
 
 const style: CSSProperties = {
   backgroundColor: "var(--bs-dark)",

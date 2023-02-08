@@ -1,6 +1,12 @@
-import React, {forwardRef, useCallback, useEffect, useImperativeHandle, useRef,} from "react";
-import {useSocket} from "../Providers/SocketContext";
-import {Button, Form, InputGroup} from "react-bootstrap";
+import React, {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+} from "react";
+import { useSocket } from "../Providers/SocketContext";
+import { Button, Form, InputGroup } from "react-bootstrap";
 
 type Props = {
   onSubmit: (text: string) => void;

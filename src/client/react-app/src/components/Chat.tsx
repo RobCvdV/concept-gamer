@@ -1,9 +1,15 @@
-import React, {FC, UIEventHandler, useCallback, useRef, useState,} from "react";
-import {Input, InputRef} from "./Input";
-import {ChatMessageCard} from "./ChatMessageCard";
-import {ManageChats} from "../useCases/ManageChats";
-import {useModelState} from "../models/store";
-import {Button} from "react-bootstrap";
+import React, {
+  FC,
+  UIEventHandler,
+  useCallback,
+  useRef,
+  useState,
+} from "react";
+import { Input, InputRef } from "./Input";
+import { ChatMessageCard } from "./ChatMessageCard";
+import { ManageChats } from "../useCases/ManageChats";
+import { useModelState } from "../models/store";
+import { Button } from "react-bootstrap";
 
 const chatStyle: React.CSSProperties = {
   justifySelf: "flex-end",
@@ -33,7 +39,6 @@ export const Chat: FC<Props> = ({ uc = new ManageChats() }) => {
     (ev) => {
       const { scrollTop, scrollHeight, offsetHeight } = ev.currentTarget;
       const distBottom = scrollHeight - offsetHeight - scrollTop;
-      console.log("offset", distBottom);
 
       setScrollingMode((scr) => {
         const newScr =
@@ -48,7 +53,6 @@ export const Chat: FC<Props> = ({ uc = new ManageChats() }) => {
             : distBottom > isScrollingOffset
             ? 2
             : 1;
-        console.log("scroll mode", newScr);
         return newScr;
       });
     },
@@ -101,7 +105,13 @@ export const Chat: FC<Props> = ({ uc = new ManageChats() }) => {
         </div>
       </div>
       {scrollingMode === 2 && (
-        <Button onClick={() => setScrollingMode(0)}>VVVVV</Button>
+        <Button
+          style={{ margin: "2px" }}
+          variant="outline-light"
+          onClick={() => setScrollingMode(0)}
+        >
+          Go Down
+        </Button>
       )}
       <Input
         key="chat-input"

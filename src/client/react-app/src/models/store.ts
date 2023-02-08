@@ -1,10 +1,15 @@
-import {init, RematchDispatch, RematchRootState, RematchStore,} from "@rematch/core";
-import {models, RootModel} from "./";
+import {
+  init,
+  RematchDispatch,
+  RematchRootState,
+  RematchStore,
+} from "@rematch/core";
+import { models, RootModel } from "./";
 import persistPlugin from "@rematch/persist";
 import storage from "redux-persist/lib/storage";
-import {useSelector} from "react-redux";
-import {PersistConfig} from "redux-persist/es/types";
-import {userModel} from "./userModel";
+import { useSelector } from "react-redux";
+import { PersistConfig } from "redux-persist/es/types";
+import { userModel } from "./userModel";
 
 export type Store = RematchStore<RootModel, RootModel>;
 export type Dispatch = RematchDispatch<RootModel>;

@@ -1,7 +1,7 @@
-import {socket} from "../Providers/SocketContext";
-import {ChatMessage} from "../models/chatModel";
-import {store} from "../models/store";
-import {DateTime} from "luxon";
+import { socket } from "../Providers/SocketContext";
+import { ChatMessage } from "../models/chatModel";
+import { store } from "../models/store";
+import { DateTime } from "luxon";
 
 export class ManageChats {
   static initialized = false;

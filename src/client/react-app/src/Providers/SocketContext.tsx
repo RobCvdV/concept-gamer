@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import * as io from "socket.io-client";
 
 export const socket = io.connect("ws://192.168.1.100:8080", {
