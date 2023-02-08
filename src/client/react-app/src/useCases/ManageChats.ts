@@ -35,7 +35,7 @@ export class ManageChats {
     const chat = {
       msg,
       who: this.getUser()?.name,
-      when: DateTime.now(),
+      when: DateTime.now().toUTC().toISO(),
     } as ChatMessage;
     console.log("chat submit", msg);
     this.chat.addChat(chat);

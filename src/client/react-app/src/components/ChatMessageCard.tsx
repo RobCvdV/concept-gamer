@@ -1,4 +1,4 @@
-import {CSSProperties, FC, useEffect, useRef} from "react";
+import {CSSProperties, FC, useEffect, useMemo, useRef} from "react";
 import {Card} from "react-bootstrap";
 import {DateTime} from "luxon";
 
@@ -32,7 +32,7 @@ const styleMsg: CSSProperties = {
 interface Props {
   msg: string;
   who: string;
-  when?: DateTime;
+  when?: string;
   isMe?: boolean;
   scrollToMe?: boolean;
 }
@@ -56,15 +56,23 @@ export const ChatMessageCard: FC<Props> = ({
     }
   }, [scrollToMe]);
 
+  const whenView = useMemo(() => {
+    if (!when) return "";
+    const dt = DateTime.fromISO(when);
+    return dt.toLocaleString(
+      dt.day !== DateTime.now().day
+        ? DateTime.DATETIME_SHORT_WITH_SECONDS
+        : DateTime.TIME_WITH_SECONDS
+    );
+  }, [when]);
+
   const borderColor = isMe ? "var(--bs-info)" : "var(--bs-gray-light)";
 
   return (
     <Card className="md" style={{ ...style, borderColor }} ref={ref}>
       <Card.Header style={styleWho}>
         {who}
-        <span style={styleWhen}>
-          {when?.toLocaleString(DateTime.TIME_SIMPLE)}
-        </span>
+        <span style={styleWhen}>{whenView}</span>
       </Card.Header>
       <Card.Body style={styleMsg}>
         <blockquote className="mb-0">{msg}</blockquote>

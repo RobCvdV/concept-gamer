@@ -1,8 +1,7 @@
 import {createModel} from "@rematch/core";
 import {RootModel} from "./";
-import {DateTime} from "luxon";
 
-export type ChatMessage = { who: string; msg: string; when: DateTime };
+export type ChatMessage = { who: string; msg: string; when: string };
 
 const initialChatState = {
   names: [] as string[],
