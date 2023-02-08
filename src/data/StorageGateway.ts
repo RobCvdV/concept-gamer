@@ -1,14 +1,14 @@
 import * as filesystem from "fs";
 import _ from "lodash";
+import {Json} from "../types/Json";
 
 const storagePath = "./.storage/";
+
 const toRelativePath = (...paths: string[]): string =>
   paths
     .flatMap((p) => p.split("/"))
     .filter((s) => !_.isEmpty(s))
     .join("/");
-
-type Json = { [k: string]: any } | any[];
 
 export class StorageGateway {
   path: string = "";

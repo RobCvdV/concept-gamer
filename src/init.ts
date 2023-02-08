@@ -6,8 +6,10 @@ import {client, clientApp} from "./client/client";
 import path from "path";
 import {SocketServer} from "./data/SocketServer";
 import {ChatGateway} from "./data/ChatGateway";
+import {RocketStore} from "./data/RocketStore";
 
 const port = process.env.PORT || 8080;
+
 const app = express();
 const server = http.createServer(app);
 
@@ -27,8 +29,10 @@ resources.forEach(({ method, route, handler }) => {
   app[method](r, handler);
 });
 
-server.listen(port, () => {
-  console.log("This server is listening at port", port);
+RocketStore.initialize().then(() => {
+  server.listen(port, () => {
+    console.log("This server is listening at port", port);
+  });
 });
 
 export type ResourceFunction = typeof app.get;
