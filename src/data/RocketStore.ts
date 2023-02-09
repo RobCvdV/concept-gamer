@@ -1,6 +1,7 @@
-import {Json} from "../types/Json";
+import { Json } from "../types/Json";
 import _ from "lodash";
-import {randomUUID} from "crypto";
+import { randomUUID } from "crypto";
+import { Id } from "../types/Id";
 
 const rs = require("rocket-store");
 const storagePath = "./.storage/";
@@ -22,7 +23,7 @@ export class RocketStore<V extends Json> {
 
   constructor(
     readonly name: string,
-    readonly idGenerator?: (item: V) => string,
+    readonly idGenerator?: (item: V) => Id,
     idOptions: "addGuid" | "addAutoInc" | "nothing" = "nothing"
   ) {
     this.postOptions =
@@ -33,16 +34,16 @@ export class RocketStore<V extends Json> {
         : 0;
   }
 
-  add = (value: V) => {
-    const key = this.idGenerator ? this.idGenerator(value) : randomUUID();
-    this.post(key, value);
+  add = (value: V): Promise<V> => {
+    const id = this.idGenerator ? this.idGenerator(value) : randomUUID();
+    return this.put(`${id}`, value);
   };
 
-  post(key: string, value: V) {
+  put(key: Id, value: V): Promise<V> {
     return rs.post(this.name, key, value, this.postOptions);
   }
 
-  postBunch(dict: { [key: string]: V }) {
+  putBunch(dict: { [key: Id]: V }): Promise<any> {
     return Promise.all(
       _.entries(dict).map(([k, v]) =>
         rs.post(this.name, k, v, this.postOptions)

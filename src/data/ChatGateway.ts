@@ -1,59 +1,60 @@
-import {Server, Socket} from "socket.io";
+import { Server, Socket } from "socket.io";
 import _ from "lodash";
-import {ChatMessage} from "../client/react-app/src/models/chatModel";
-import {SocketService} from "./SocketService";
-import {RocketStore} from "./RocketStore";
-import {randomUUID} from "crypto";
+import { ChatMessage } from "../client/react-app/src/models/chatModel";
+import { MessageHandler, SocketService } from "./SocketService";
+import { RocketStore } from "./RocketStore";
+import { randomUUID } from "crypto";
+import { getNamedLogs } from "../utils/cons";
+import { Id } from "../types/Id";
+import { User } from "./User";
 
-type User = {
-  name: string;
-};
+const { cons } = getNamedLogs({ name: "ChatGateway" });
 
 export class ChatGateway extends SocketService {
-  constructor(
-    readonly io: Server,
-    readonly users = new RocketStore<User>(
-      "users",
-      (item) => item.name,
-      "addGuid"
-    ),
-    readonly history = new RocketStore<ChatMessage>(
-      "history",
-      (item) => `${item.when}-${randomUUID()}`
-    )
-  ) {
-    super(io, "chat", [
+  constructor(readonly io: Server) {
+    super(io, "chat");
+
+    this.listeners = [
       {
         event: "chat-message",
-        handler: (message) => this.history.add(message),
+        handler: this.handleChatMessage,
+        broadcast: true,
       },
-    ]);
-    // storage
-    //   .load("names", {})
-    //   .then((names) => (this.names = (names as any) || {}))
-    //   .catch(() => storage.save("names", {}));
-    // storage
-    //   .load("history", [])
-    //   .then((history) => (this.history = (history as any) || []))
-    //   .catch(() => storage.save("history", []));
+      {
+        event: "change-user-name",
+        handler: this.handleChangeUserName,
+        broadcast: true,
+      },
+    ];
   }
 
+  readonly users = new RocketStore<User>("users", (u) => u.id, "addGuid");
+  readonly history = new RocketStore<ChatMessage>(
+    "history",
+    (item) => `${item.when}-${randomUUID()}`
+  );
+
+  handleChatMessage: MessageHandler = (msg: ChatMessage) =>
+    this.history.add(msg);
+
+  handleLookupUser: MessageHandler = (name: string, sock) => {
+    return this.users.get(`*${name}*`).then((u) => sock.emit("new-user", u));
+  };
+
+  handleAddUser: MessageHandler = (name: string, sock) => {
+    return this.users
+      .add({
+        socketId: sock.id,
+        name,
+        id: randomUUID(),
+      })
+      .then((u) => sock.emit("new-user", u));
+  };
+
+  handleChangeUserName: MessageHandler = (u: User, sock) =>
+    this.users.put(u.id, u);
+
   onConnect(socket: Socket) {
-    socket.on("chat-message", (msg: ChatMessage) => {
-      cons.log("received chat from", this.names[socket.id], msg);
-      socket.broadcast.emit("chat-message", msg);
-    });
-
-    socket.on("user-name", (name) => {
-      cons.log("received user name", this.names[socket.id], "=>", name);
-      const priorName = this.names[socket.id];
-      this.names[socket.id] = name;
-      this.saveNames();
-
-      // this.io.emit("chat-names", _.values(this.names));
-      socket.broadcast.emit("user-name", { oldName: priorName, name });
-    });
-
     socket.emit("chat-names", _.values(this.names));
   }
 
