@@ -10,6 +10,7 @@ import { ChatMessageCard } from "./ChatMessageCard";
 import { ManageChats } from "../useCases/ManageChats";
 import { useModelState } from "../models/store";
 import { Button } from "react-bootstrap";
+import { Account } from "./Account";
 
 const chatStyle: React.CSSProperties = {
   justifySelf: "flex-end",
@@ -32,8 +33,10 @@ export const Chat: FC<Props> = ({ uc = new ManageChats() }) => {
   const [scrollingMode, setScrollingMode] = useState(0);
   const chatInputRef = useRef<InputRef>(null);
 
-  const { names, messages } = useModelState("chatModel");
-  const { name } = useModelState("userModel");
+  const { messages } = useModelState("chatModel");
+  const {
+    user: { name },
+  } = useModelState("userModel");
 
   const userIsScrolling = useCallback<UIEventHandler<HTMLDivElement>>(
     (ev) => {
@@ -66,23 +69,9 @@ export const Chat: FC<Props> = ({ uc = new ManageChats() }) => {
     [uc]
   );
 
-  const onSubmitName = useCallback(
-    (name: string) => {
-      uc?.changeName(name);
-      chatInputRef.current?.focus();
-    },
-    [uc, chatInputRef]
-  );
-
   return (
     <div style={chatStyle}>
-      <Input
-        key="name"
-        label="Chat naam"
-        placeholder={name}
-        onSubmit={onSubmitName}
-        style={{ justifySelf: "flex-start" }}
-      />
+      <Account nextFocusRef={chatInputRef} />
       <div
         style={{
           overflowY: "scroll",
@@ -106,7 +95,9 @@ export const Chat: FC<Props> = ({ uc = new ManageChats() }) => {
       </div>
       {scrollingMode === 2 && (
         <Button
-          style={{ margin: "2px" }}
+          style={{
+            margin: "2px",
+          }}
           variant="outline-light"
           onClick={() => setScrollingMode(0)}
         >
@@ -116,7 +107,7 @@ export const Chat: FC<Props> = ({ uc = new ManageChats() }) => {
       <Input
         key="chat-input"
         onSubmit={onSubmitChat}
-        showButton
+        confirmButton="Send =>"
         ref={chatInputRef}
       />
     </div>

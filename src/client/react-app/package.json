@@ -21,11 +21,13 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "cp-root": "rm -rf ./src/types ; rm -rf ./src/utils ; cp -rf ../../types/ ./src/types/ & cp -rf ../../utils/ ./src/utils",
     "watch": "npm-watch",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "post-install": "npm run cp-root"
   },
   "watch": {
     "build": {

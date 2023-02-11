@@ -1,12 +1,12 @@
 import React from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
-import {socket, SocketContext} from "./Providers/SocketContext";
-import {Chat} from "./components/Chat";
-import {store} from "./models/store";
-import {Provider} from "react-redux";
-import {getPersistor} from "@rematch/persist";
-import {PersistGate} from "redux-persist/lib/integration/react";
+import { socket, SocketContext } from "./Providers/SocketContext";
+import { Chat } from "./components/Chat";
+import { store } from "./models/store";
+import { Provider } from "react-redux";
+import { getPersistor } from "@rematch/persist";
+import { PersistGate } from "redux-persist/lib/integration/react";
 
 const persistor = getPersistor();
 

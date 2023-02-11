@@ -4,7 +4,6 @@ import { RootModel } from "./";
 export type ChatMessage = { who: string; msg: string; when: string };
 
 const initialChatState = {
-  names: [] as string[],
   messages: [] as ChatMessage[],
 };
 

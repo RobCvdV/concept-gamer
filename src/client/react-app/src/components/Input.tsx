@@ -1,11 +1,9 @@
 import React, {
   forwardRef,
   useCallback,
-  useEffect,
   useImperativeHandle,
   useRef,
 } from "react";
-import { useSocket } from "../Providers/SocketContext";
 import { Button, Form, InputGroup } from "react-bootstrap";
 
 type Props = {
@@ -14,7 +12,7 @@ type Props = {
   placeholder?: string;
   multiline?: boolean;
   style?: React.CSSProperties;
-  showButton?: boolean;
+  confirmButton?: string;
 };
 
 const formStyle: React.CSSProperties = {
@@ -31,26 +29,14 @@ export type InputRef = {
 
 export const Input = forwardRef<InputRef, Props>(
   (
-    {
-      onSubmit,
-      label,
-      placeholder,
-      style,
-      multiline = false,
-      showButton = false,
-    },
+    { onSubmit, label, placeholder, style, multiline = false, confirmButton },
     ref?
   ) => {
-    const socket = useSocket();
     const inputRef = useRef<HTMLInputElement>(null);
     useImperativeHandle(ref, () => ({
       focus: () => inputRef.current?.focus(),
       current: inputRef.current,
     }));
-
-    useEffect(() => {
-      // inputRef.current = ref?.current || null
-    });
 
     const onSubmitInner = useCallback(
       (e: any) => {
@@ -58,11 +44,11 @@ export const Input = forwardRef<InputRef, Props>(
         const input = inputRef.current;
         if (!input) return;
         onSubmit(input.value);
-        if (showButton) {
+        if (confirmButton) {
           input.value = "";
         }
       },
-      [inputRef, socket]
+      [inputRef, onSubmit, confirmButton]
     );
 
     return (
@@ -76,9 +62,9 @@ export const Input = forwardRef<InputRef, Props>(
             onSubmit={onSubmitInner}
             ref={inputRef}
           />
-          {showButton && (
+          {confirmButton && (
             <Button variant="outline-secondary" onClick={onSubmitInner}>
-              {">"}
+              {confirmButton}
             </Button>
           )}
         </InputGroup>
