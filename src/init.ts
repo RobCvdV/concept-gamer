@@ -8,6 +8,9 @@ import { SocketServer } from "./data/SocketServer";
 import { RocketStore } from "./data/RocketStore";
 import { ChatGateway } from "./data/ChatGateway";
 import { UserGateway } from "./data/UserGateway";
+import { consSettings } from "./utils/cons";
+
+consSettings.blacklist = ["RocketStore"];
 
 const port = process.env.PORT || 8080;
 

@@ -58,6 +58,9 @@ export class UserGateway extends SocketService {
     this.users
       .get()
       .then((us) => us?.map(({ name }) => name))
-      .then((names) => socket.emit("user-names", names));
+      .then((names) => {
+        cons.log("give all user name to new connection", names);
+        return socket.emit("names", names);
+      });
   }
 }
