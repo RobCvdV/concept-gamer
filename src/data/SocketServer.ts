@@ -1,14 +1,13 @@
-import {Server, Socket} from "socket.io";
+import { Server, Socket } from "socket.io";
 import http from "http";
 import _ from "lodash";
+import { Constructor } from "../types/Constructor";
 
 export interface ISocketService {
   onConnect: (socket: Socket) => void;
   onDisconnect: (socket: Socket) => void;
   messages?: { [messageType: string]: (socket: Socket) => void };
 }
-
-export type Constructor<T = unknown> = { new (io: Server): T };
 
 export class SocketServer {
   readonly services: ISocketService[] = [];
@@ -25,11 +24,9 @@ export class SocketServer {
   init() {
     this.io.on("connection", (socket) => {
       console.log("a user connected", socket.id);
-      // this.sockets[socket.id] = socket;
 
       socket.on("disconnect", () => {
-        console.log("user disconnected", socket.id);
-        // delete this.sockets[socket.id];
+        console.log("user disconnected", socket.client?.conn?.remoteAddress);
       });
     });
   }
