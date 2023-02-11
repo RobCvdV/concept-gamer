@@ -5,8 +5,12 @@ import { RootModel } from "../models";
 import { reject } from "lodash";
 import { AnyObject } from "../types/AnyObject";
 import { SimpleType } from "../types/SimpleType";
+import { isPromise } from "../utils/isPromise";
 
-export type MessageHandler = (message: any, reply?: Reply) => Promise<unknown>;
+export type MessageHandler = (
+  message: any,
+  reply?: Reply
+) => PromiseLike<unknown> | any | void;
 
 type Defined = AnyObject | SimpleType;
 
@@ -53,11 +57,10 @@ export class Manage<M extends keyof RootModel, E extends string = string> {
     this.listeners = listeners;
     this.listeners.map(({ event, handler }) => {
       const cmd = `${this.name}.${event}`;
-      return socket.on(cmd, (m) => {
+      return socket.on(cmd, async (m) => {
         this.log(cmd, `received from server`);
-        return handler(m).then(() => {
-          this.log(cmd, `handled from server`);
-        });
+        isPromise(handler) ? await handler(m) : handler(m);
+        this.log(cmd, `handled from server`);
       });
     });
   }

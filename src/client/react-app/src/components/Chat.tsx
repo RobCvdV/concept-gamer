@@ -2,6 +2,7 @@ import React, {
   FC,
   UIEventHandler,
   useCallback,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -18,7 +19,7 @@ const chatStyle: React.CSSProperties = {
   display: "flex",
   flexDirection: "column",
   fontSize: "14pt",
-  justifyContent: "flex-end",
+  justifyContent: "flex-start",
   border: "gray solid 1px",
   padding: "5px",
 };
@@ -74,6 +75,7 @@ export const Chat: FC<Props> = ({ uc = new ManageChats() }) => {
       <Account nextFocusRef={chatInputRef} />
       <div
         style={{
+          flex: 1,
           overflowY: "scroll",
           scrollBehavior: "revert",
           maxHeight: "90%",
@@ -107,7 +109,7 @@ export const Chat: FC<Props> = ({ uc = new ManageChats() }) => {
       <Input
         key="chat-input"
         onSubmit={onSubmitChat}
-        confirmButton="Send =>"
+        rightElement="Send =>"
         ref={chatInputRef}
       />
     </div>

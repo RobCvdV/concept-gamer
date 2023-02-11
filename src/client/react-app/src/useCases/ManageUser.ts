@@ -12,7 +12,11 @@ export class ManageUser extends Manage<"userModel"> {
     this.initialize([
       {
         event: "names",
-        handler: (names) => Promise.resolve(this.dispatch.setNames(names)),
+        handler: (names) => this.dispatch.setNames(names),
+      },
+      {
+        event: "*",
+        handler: () => this.dispatch.updateLastActivity(),
       },
     ]);
   }

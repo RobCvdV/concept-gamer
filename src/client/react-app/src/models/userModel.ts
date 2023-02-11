@@ -1,10 +1,13 @@
 import { createModel } from "@rematch/core";
 import { RootModel } from "./";
 import { User } from "../types/User";
+import { DateTime } from "luxon";
+import { cons } from "../utils/cons";
 
 const initialUserState = {
   user: { name: "" } as User,
   userNames: [] as string[],
+  lastActivity: DateTime.fromMillis(0) as DateTime,
 };
 
 export type UserState = typeof initialUserState;
@@ -25,6 +28,10 @@ export const userModel = createModel<RootModel>()({
       user: { ...s.user, name: newName },
       userNames: s.userNames.map((n) => (s.user.name === n ? newName : n)),
     }),
+    updateLastActivity: (s) => {
+      cons.log("tickle user");
+      return { ...s, lastActivity: DateTime.now() };
+    },
   },
   effects: (dispatch) => ({}),
 });

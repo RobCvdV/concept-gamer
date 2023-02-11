@@ -1,18 +1,24 @@
 import React, {
   forwardRef,
+  SyntheticEvent,
+  UIEventHandler,
   useCallback,
   useImperativeHandle,
+  useMemo,
   useRef,
+  useState,
 } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
 
 type Props = {
+  initValue?: string;
   onSubmit: (text: string) => void;
-  label?: string;
+  onInput?: (text: string) => void;
+  leftElement?: string | JSX.Element;
+  rightElement?: string | JSX.Element;
   placeholder?: string;
   multiline?: boolean;
   style?: React.CSSProperties;
-  confirmButton?: string;
 };
 
 const formStyle: React.CSSProperties = {
@@ -29,44 +35,86 @@ export type InputRef = {
 
 export const Input = forwardRef<InputRef, Props>(
   (
-    { onSubmit, label, placeholder, style, multiline = false, confirmButton },
+    {
+      onSubmit,
+      onInput,
+      initValue,
+      leftElement,
+      rightElement,
+      placeholder,
+      style,
+      multiline = false,
+    },
     ref?
   ) => {
     const inputRef = useRef<HTMLInputElement>(null);
+    const [editValue, setEditValue] = useState("");
+
     useImperativeHandle(ref, () => ({
       focus: () => inputRef.current?.focus(),
       current: inputRef.current,
     }));
 
+    const onInputInner = useCallback(
+      (e: SyntheticEvent) => {
+        e.preventDefault();
+        const edit = inputRef.current?.value || "";
+        console.log("editing", edit);
+        setEditValue(edit);
+        onInput && onInput(edit);
+      },
+      [setEditValue, onInput]
+    );
+
     const onSubmitInner = useCallback(
-      (e: any) => {
+      (e: SyntheticEvent) => {
         e.preventDefault();
         const input = inputRef.current;
         if (!input) return;
         onSubmit(input.value);
-        if (confirmButton) {
+        if (rightElement) {
           input.value = "";
         }
       },
-      [inputRef, onSubmit, confirmButton]
+      [inputRef, onSubmit, rightElement]
     );
+
+    const left = useMemo(() => {
+      if (typeof leftElement !== "undefined") {
+        return <InputGroup.Text>{leftElement}</InputGroup.Text>;
+      } else return null;
+    }, [leftElement]);
+
+    const right = useMemo(() => {
+      if (typeof rightElement === "string") {
+        return (
+          <Button
+            disabled={!editValue}
+            variant="outline-secondary"
+            onClick={(e: SyntheticEvent) => {
+              onSubmitInner(e);
+              inputRef.current?.focus();
+            }}
+          >
+            {rightElement}
+          </Button>
+        );
+      } else return rightElement || null;
+    }, [rightElement, onSubmitInner, editValue]);
 
     return (
       <Form onSubmit={onSubmitInner}>
         <InputGroup className="mb-3">
-          {label && <InputGroup.Text id="front">{label}</InputGroup.Text>}
+          {left}
           <Form.Control
             placeholder={placeholder}
             aria-label="Username"
             aria-describedby="front"
             onSubmit={onSubmitInner}
+            onInput={onInputInner}
             ref={inputRef}
           />
-          {confirmButton && (
-            <Button variant="outline-secondary" onClick={onSubmitInner}>
-              {confirmButton}
-            </Button>
-          )}
+          {right}
         </InputGroup>
       </Form>
     );
