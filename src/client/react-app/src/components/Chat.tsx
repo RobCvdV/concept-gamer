@@ -15,14 +15,16 @@ import { Account } from "./Account";
 
 const chatStyle: React.CSSProperties = {
   minWidth: "300px",
+  maxWidth: "40%",
   width: "20%",
-  justifySelf: "flex-end",
+  height: "100vh",
   display: "flex",
   flexDirection: "column",
-  fontSize: "14pt",
   justifyContent: "flex-start",
-  border: "gray solid 1px",
   padding: "5px",
+  fontSize: "14pt",
+  backgroundColor: "black",
+  border: "gray solid 1px",
 };
 
 const messagesStyle: React.CSSProperties = {
@@ -77,14 +79,14 @@ export const Chat: FC<Props> = ({ uc = new ManageChats() }) => {
   );
 
   return (
-    <div style={chatStyle}>
+    <Stack direction="vertical" gap={1} style={chatStyle}>
       <Account nextFocusRef={chatInputRef} />
       <div
         style={{
           flex: 1,
           overflowY: "scroll",
           scrollBehavior: "revert",
-          maxHeight: "90%",
+          maxHeight: "100%",
           padding: "5px 0",
         }}
         onScroll={userIsScrolling}
@@ -102,7 +104,10 @@ export const Chat: FC<Props> = ({ uc = new ManageChats() }) => {
           ))}
         </Stack>
       </div>
-      <Stack gap={2} style={{ flex: 0 }}>
+      <Stack
+        gap={3}
+        style={{ flex: 0, marginTop: "6px", backgroundColor: "black" }}
+      >
         {scrollingMode === 2 && (
           <Button
             style={{
@@ -117,10 +122,10 @@ export const Chat: FC<Props> = ({ uc = new ManageChats() }) => {
         <Input
           key="chat-input"
           onSubmit={onSubmitChat}
-          rightElement="Send =>"
+          rightElement="Send"
           ref={chatInputRef}
         />
       </Stack>
-    </div>
+    </Stack>
   );
 };

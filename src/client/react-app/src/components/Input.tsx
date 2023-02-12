@@ -109,7 +109,7 @@ export const Input = forwardRef<InputRef, Props>(
 
     return (
       <Form onSubmit={onSubmitInner} style={formStyle} className="Input">
-        <InputGroup className="mb-3">
+        <InputGroup>
           {left}
           <Form.Control
             placeholder={placeholder}
