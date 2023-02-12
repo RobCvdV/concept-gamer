@@ -10,18 +10,24 @@ import { Input, InputRef } from "./Input";
 import { ChatMessageCard } from "./ChatMessageCard";
 import { ManageChats } from "../useCases/ManageChats";
 import { useModelState } from "../models/store";
-import { Button } from "react-bootstrap";
+import { Button, Stack } from "react-bootstrap";
 import { Account } from "./Account";
 
 const chatStyle: React.CSSProperties = {
+  minWidth: "300px",
+  width: "20%",
   justifySelf: "flex-end",
-  flex: 1,
   display: "flex",
   flexDirection: "column",
   fontSize: "14pt",
   justifyContent: "flex-start",
   border: "gray solid 1px",
   padding: "5px",
+};
+
+const messagesStyle: React.CSSProperties = {
+  flex: 1,
+  fontSize: "14pt",
 };
 
 type Props = {
@@ -79,10 +85,11 @@ export const Chat: FC<Props> = ({ uc = new ManageChats() }) => {
           overflowY: "scroll",
           scrollBehavior: "revert",
           maxHeight: "90%",
+          padding: "5px 0",
         }}
         onScroll={userIsScrolling}
       >
-        <div id="messages" style={{ flex: 1 }}>
+        <Stack id="messages" style={messagesStyle} direction="vertical" gap={2}>
           {messages.map(({ msg, who, when }, i) => (
             <ChatMessageCard
               key={i}
@@ -93,25 +100,27 @@ export const Chat: FC<Props> = ({ uc = new ManageChats() }) => {
               scrollToMe={scrollingMode < 2 && messages.length - 1 === i}
             />
           ))}
-        </div>
+        </Stack>
       </div>
-      {scrollingMode === 2 && (
-        <Button
-          style={{
-            margin: "2px",
-          }}
-          variant="outline-light"
-          onClick={() => setScrollingMode(0)}
-        >
-          Go Down
-        </Button>
-      )}
-      <Input
-        key="chat-input"
-        onSubmit={onSubmitChat}
-        rightElement="Send =>"
-        ref={chatInputRef}
-      />
+      <Stack gap={2} style={{ flex: 0 }}>
+        {scrollingMode === 2 && (
+          <Button
+            style={{
+              margin: "2px",
+            }}
+            variant="outline-light"
+            onClick={() => setScrollingMode(0)}
+          >
+            Go Down
+          </Button>
+        )}
+        <Input
+          key="chat-input"
+          onSubmit={onSubmitChat}
+          rightElement="Send =>"
+          ref={chatInputRef}
+        />
+      </Stack>
     </div>
   );
 };

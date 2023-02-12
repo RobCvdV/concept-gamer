@@ -9,6 +9,7 @@ import React, {
   useState,
 } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
+import "./Input.css";
 
 type Props = {
   initValue?: string;
@@ -22,10 +23,7 @@ type Props = {
 };
 
 const formStyle: React.CSSProperties = {
-  flex: 0,
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "stretch",
+  backgroundColor: "var(--bs-dark)",
 };
 
 export type InputRef = {
@@ -99,11 +97,18 @@ export const Input = forwardRef<InputRef, Props>(
             {rightElement}
           </Button>
         );
-      } else return rightElement || null;
+      } else
+        return (
+          (
+            <InputGroup.Text style={{ padding: "0 3px" }}>
+              {rightElement}
+            </InputGroup.Text>
+          ) || null
+        );
     }, [rightElement, onSubmitInner, editValue]);
 
     return (
-      <Form onSubmit={onSubmitInner}>
+      <Form onSubmit={onSubmitInner} style={formStyle} className="Input">
         <InputGroup className="mb-3">
           {left}
           <Form.Control

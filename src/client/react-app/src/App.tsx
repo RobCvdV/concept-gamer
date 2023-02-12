@@ -20,7 +20,7 @@ function App() {
       <Provider store={store}>
         <PersistGate persistor={persistor} loading={"loading..."}>
           <SocketContext.Provider value={socket}>
-            <div className="App-content" style={row("stretch", "stretch")}>
+            <div className="App-content" style={row("flex-end", "stretch")}>
               <Document />
               <Chat />
             </div>

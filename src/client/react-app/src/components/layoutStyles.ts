@@ -13,10 +13,8 @@ export const row = (
   alignItems: align,
 });
 
-export const rowRight: CSSProperties = {
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "flex-end",
+export const justifyEnd: CSSProperties = {
+  justifySelf: "flex-end",
 };
 
 export const column = (

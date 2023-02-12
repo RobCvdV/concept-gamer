@@ -33,6 +33,7 @@ export const Account: FC<Props> = ({ nextFocusRef }) => {
   const uc = useUseCase(ManageUser);
 
   const { userNames, user, lastActivity } = useModelState("userModel");
+  console.log("userNames", userNames);
   const name = user.name;
   const isUnknown = !user.id;
   const isActive = !!(DateTime.fromISO("lastActivity")?.diffNow().minutes < 1);
@@ -56,9 +57,12 @@ export const Account: FC<Props> = ({ nextFocusRef }) => {
   const rightElement = useMemo(() => {
     return (
       <Dropdown>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          Select other user
-        </Dropdown.Toggle>
+        <Dropdown.Toggle
+          size={"sm"}
+          style={{ border: "none" }}
+          variant="outline-light"
+          id="dropdown-basic"
+        ></Dropdown.Toggle>
 
         <Dropdown.Menu>
           {userNames

@@ -1,0 +1,10 @@
+
+.btn.ToolButton:hover {
+  border-color: revert;
+}
+
+.btn.ToolButton {
+  background-color: transparent;
+  border-color: transparent;
+  margin: 0;
+}

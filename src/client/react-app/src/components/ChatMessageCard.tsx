@@ -5,8 +5,7 @@ import { DateTime } from "luxon";
 const style: CSSProperties = {
   backgroundColor: "var(--bs-dark)",
   textAlign: "left",
-  fontSize: "14px",
-  marginTop: "5px",
+  fontSize: "16px",
 };
 
 const styleWho: CSSProperties = {

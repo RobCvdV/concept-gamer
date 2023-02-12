@@ -1,11 +1,8 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { FC } from "react";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
-import { IconName } from "@fortawesome/free-regular-svg-icons";
+import {
+  FontAwesomeIcon,
+  FontAwesomeIconProps,
+} from "@fortawesome/react-fontawesome";
+import React, { FC, ReactNode } from "react";
 
-type Props = {
-  icon: IconDefinition;
-};
-// regular("coffee")
-export const Icon: FC<Props> = ({ icon }) => <FontAwesomeIcon icon={icon} />;
+type Props = FontAwesomeIconProps & {};
+export const Icon: FC<Props> = ({ ...props }) => <FontAwesomeIcon {...props} />;

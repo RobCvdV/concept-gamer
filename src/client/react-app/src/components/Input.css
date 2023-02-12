@@ -1,0 +1,5 @@
+.Input .input-group-text,
+.Input .form-control {
+  background-color: #333333;
+  color: white;
+}

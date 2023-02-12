@@ -1,12 +1,23 @@
 .App {
-    text-align: center;
+  text-align: center;
 }
 
 .App-content {
-    background-color: #282c34;
-    color: white;
-    min-height: calc(100vh);
-    max-height: calc(100vh);
-    overflow: hidden;
-    font-size: calc(10px + 2vmin);
+  background-color: #282c34;
+  color: white;
+  min-height: calc(100vh);
+  max-height: calc(100vh);
+  overflow: hidden;
+  font-size: calc(10px + 2vmin);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+*::-webkit-scrollbar {
+  display: inline;
+  width: 1px;
+  scrollbar-color: '#55555555';
+}
+
