@@ -22,7 +22,7 @@ function App() {
           <SocketContext.Provider value={socket}>
             <div className="App-content" style={row("flex-end", "stretch")}>
               <Document />
-              <Chat />
+              {/*<Chat />*/}
             </div>
           </SocketContext.Provider>
         </PersistGate>
