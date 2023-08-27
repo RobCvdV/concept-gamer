@@ -1,5 +1,5 @@
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
-import { CSSProperties, FC } from "react";
+import { FC } from "react";
 import { Button } from "react-bootstrap";
 import { ButtonProps } from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

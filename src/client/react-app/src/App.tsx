@@ -1,8 +1,7 @@
-import React, { CSSProperties } from "react";
+import React from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import { socket, SocketContext } from "./Providers/SocketContext";
-import { Chat } from "./components/Chat";
 import { store } from "./models/store";
 import { Provider } from "react-redux";
 import { getPersistor } from "@rematch/persist";
@@ -11,8 +10,6 @@ import { Document } from "./components/designBoard/Document";
 import { row } from "./components/layoutStyles";
 
 const persistor = getPersistor();
-
-const appStyle: CSSProperties = {};
 
 function App() {
   return (

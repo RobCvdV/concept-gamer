@@ -1,4 +1,3 @@
-import { Position } from "../../types/Position";
 import React, {
   CSSProperties,
   FC,
@@ -8,11 +7,8 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { Size } from "../../types/Size";
-import { TransformComponent, useTransformContext } from "react-zoom-pan-pinch";
-import { useMousePosition } from "../../hooks/useMousePosition";
+import { useTransformContext } from "react-zoom-pan-pinch";
 import { globalMousePosition } from "./Canvas";
-import { useDispatch } from "react-redux";
 import { store } from "../../models/store";
 import { CardState } from "../../models/boardModel";
 //
