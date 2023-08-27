@@ -1,43 +1,46 @@
 {
-  "name": "concept-gamer",
-  "version": "1.0.0",
-  "description": "A web server and client tool to design concept games online",
-  "main": "./src/index.ts",
-  "scripts": {
-    "start": "npx ts-node ./src/init.ts",
+  "name":            "concept-gamer",
+  "version":         "1.0.0",
+  "description":     "A web server and client tool to design concept games online",
+  "main":            "./src/index.ts",
+  "scripts":         {
+    "start-server":     "npx ts-node ./src/init.ts",
     "start-client-dev": "cd src/client/react-app && npm run start",
-    "dev": "npx ts-node-dev ./src/init.ts",
-    "dev-all": "npm run dev & npm run start-client-dev"
+    "dev":              "npx ts-node-dev ./src/init.ts",
+    "dev-all":          "npm run dev & npm run start-client-dev",
+    "build":            "cd src/client/react-app && npm run build",
+    "start":            "npm run build && npm run start-server",
+    "postinstall":      "cd src/client/react-app && npm install"
   },
-  "keywords": [
+  "keywords":        [
     "gameing",
     "design",
     "concept",
     "puzzle",
     "cards"
   ],
-  "author": "Rob Coenen",
-  "license": "ISC",
+  "author":          "Rob Coenen",
+  "license":         "ISC",
   "devDependencies": {
-    "@types/cors": "^2.8.13",
+    "@types/cors":    "^2.8.13",
     "@types/express": "^4.17.16",
-    "@types/lodash": "^4.14.191",
-    "@types/luxon": "^3.2.0",
-    "@types/node": "^18.11.18",
-    "prettier": "^2.8.3",
-    "ts-node": "^10.9.1",
-    "tsc-watch": "^6.0.0",
-    "typescript": "^4.9.5"
+    "@types/lodash":  "^4.14.191",
+    "@types/luxon":   "^3.2.0",
+    "@types/node":    "^18.11.18",
+    "prettier":       "^2.8.3",
+    "ts-node":        "^10.9.1",
+    "tsc-watch":      "^6.0.0",
+    "typescript":     "^4.9.5"
   },
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.18.2",
+  "dependencies":    {
+    "cors":              "^2.8.5",
+    "express":           "^4.18.2",
     "http-status-codes": "^2.2.0",
-    "lodash": "^4.17.21",
-    "luxon": "^3.2.1",
-    "npm": "^9.4.0",
-    "rocket-store": "^0.10.8",
-    "socket.io": "^4.5.4",
-    "ts-node-dev": "^2.0.0"
+    "lodash":            "^4.17.21",
+    "luxon":             "^3.2.1",
+    "npm":               "^9.4.0",
+    "rocket-store":      "^0.10.8",
+    "socket.io":         "^4.5.4",
+    "ts-node-dev":       "^2.0.0"
   }
 }

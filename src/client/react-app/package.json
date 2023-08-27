@@ -1,56 +1,56 @@
 {
-  "name": "react-app",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.3.0",
+  "name":            "react-app",
+  "version":         "0.1.0",
+  "private":         true,
+  "dependencies":    {
+    "@fortawesome/fontawesome-svg-core":   "^6.3.0",
     "@fortawesome/free-regular-svg-icons": "^6.3.0",
-    "@fortawesome/free-solid-svg-icons": "^6.3.0",
-    "@fortawesome/react-fontawesome": "^0.2.0",
-    "@rematch/core": "^2.2.0",
-    "@rematch/persist": "^2.1.2",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "babel-plugin-macros": "^3.1.0",
-    "bootstrap": "^5.2.3",
-    "luxon": "^3.2.1",
-    "react": "^18.2.0",
-    "react-bootstrap": "^2.7.0",
-    "react-dom": "^18.2.0",
-    "react-redux": "^8.0.5",
-    "react-scripts": "5.0.1",
-    "react-zoom-pan-pinch": "^2.6.1",
-    "redux-persist": "^6.0.0",
-    "socket.io-client": "^4.5.4",
-    "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+    "@fortawesome/free-solid-svg-icons":   "^6.3.0",
+    "@fortawesome/react-fontawesome":      "^0.2.0",
+    "@rematch/core":                       "^2.2.0",
+    "@rematch/persist":                    "^2.1.2",
+    "@testing-library/jest-dom":           "^5.16.5",
+    "@testing-library/react":              "^13.4.0",
+    "@testing-library/user-event":         "^13.5.0",
+    "babel-plugin-macros":                 "^3.1.0",
+    "bootstrap":                           "^5.2.3",
+    "luxon":                               "^3.2.1",
+    "react":                               "^18.2.0",
+    "react-bootstrap":                     "^2.7.0",
+    "react-dom":                           "^18.2.0",
+    "react-redux":                         "^8.0.5",
+    "react-scripts":                       "5.0.1",
+    "react-zoom-pan-pinch":                "^2.6.1",
+    "redux-persist":                       "^6.0.0",
+    "socket.io-client":                    "^4.5.4",
+    "typescript":                          "^4.9.5",
+    "web-vitals":                          "^2.1.4"
   },
-  "scripts": {
+  "scripts":         {
     "cp-from-root": "cp -rf ../../types/** ./src/types/ & cp -rf ../../utils/** ./src/utils",
-    "watch": "npm-watch",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "postinstall": "npm run cp-from-root"
+    "watch":        "npm-watch",
+    "start":        "react-scripts start",
+    "build":        "react-scripts build",
+    "test":         "react-scripts test",
+    "eject":        "react-scripts eject",
+    "postinstall":  "npm run cp-from-root"
   },
-  "watch": {
+  "watch":           {
     "build": {
-      "patterns": [
+      "patterns":   [
         "src"
       ],
       "extensions": "ts,tsx,js,jsx"
     }
   },
-  "eslintConfig": {
+  "eslintConfig":    {
     "extends": [
       "react-app",
       "react-app/jest"
     ]
   },
-  "browserslist": {
-    "production": [
+  "browserslist":    {
+    "production":  [
       ">0.2%",
       "not dead",
       "not op_mini all"
@@ -62,11 +62,11 @@
     ]
   },
   "devDependencies": {
-    "@types/jest": "^27.5.2",
-    "@types/luxon": "^3.2.0",
-    "@types/node": "^16.18.11",
-    "@types/react": "^18.0.27",
+    "@types/jest":      "^27.5.2",
+    "@types/luxon":     "^3.2.0",
+    "@types/node":      "^16.18.11",
+    "@types/react":     "^18.0.27",
     "@types/react-dom": "^18.0.10",
-    "npm-watch": "^0.11.0"
+    "npm-watch":        "^0.11.0"
   }
 }
