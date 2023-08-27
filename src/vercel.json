@@ -1,16 +1,9 @@
 {
-  "version": 2,
-  "name":    "concept-gamer",
-  "builds":  [
-    {
-      "src": "init.ts",
-      "use": "@vercel/ts-node"
+  "version":   2,
+  "name":      "concept-gamer",
+  "functions": {
+    "ts-node init.ts": {
+      "runtime": "npx@9.8.1"
     }
-  ],
-  "routes":  [
-    {
-      "src": "/(.*)",
-      "dest": "/init.ts"
-    }
-  ]
+  }
 }
