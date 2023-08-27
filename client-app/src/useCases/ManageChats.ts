@@ -1,8 +1,8 @@
-import { ChatMessage } from "../models/chatModel";
 import { store } from "../models/store";
 import { DateTime } from "luxon";
 import { Manage } from "./Manage";
 import { User } from "../types/User";
+import { ChatMessage } from "../../../src/types/chatMessage";
 
 export class ManageChats extends Manage<"chatModel"> {
   private get user(): User {

@@ -27,7 +27,7 @@
     "web-vitals":                          "^2.1.4"
   },
   "scripts":         {
-    "cp-from-root": "cp -rf ../../types/ ./src/types/ & cp -rf ../../utils/ ./src/utils",
+    "cp-from-root": "cp -rf ../src/types/ ./src/types/ & cp -rf ../src/utils/ ./src/utils",
     "watch":        "npm-watch",
     "start":        "react-scripts start",
     "build":        "react-scripts build",

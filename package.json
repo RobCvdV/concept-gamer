@@ -5,12 +5,14 @@
   "main":            "./src/index.ts",
   "scripts":         {
     "start-server":     "npx ts-node ./src/init.ts",
-    "start-client-dev": "cd src/client/react-app && npm run start",
+    "start-client-dev": "cd client-app && npm run start",
     "dev":              "npx ts-node-dev ./src/init.ts",
     "dev-all":          "npm run dev & npm run start-client-dev",
-    "build":            "cd src/client/react-app && npm run build",
+    "build-client":     "cd client-app && npm run build",
+    "build-server":     "cp -rf client-app/build ./src/client",
+    "build":            "npm run build-client && npm run build-server",
     "start":            "npm run start-server",
-    "postinstall":      "cd src/client/react-app && npm install"
+    "postinstall":      "cd client-app && npm install"
   },
   "keywords":        [
     "gameing",

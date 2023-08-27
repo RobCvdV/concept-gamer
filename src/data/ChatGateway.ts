@@ -1,9 +1,9 @@
 import { Server, Socket } from "socket.io";
-import { ChatMessage } from "../client/react-app/src/models/chatModel";
 import { MessageHandler, SocketService } from "./SocketService";
 import { RocketStore } from "./RocketStore";
 import { randomUUID } from "crypto";
 import { getNamedLogs } from "../utils/cons";
+import { ChatMessage } from "../types/chatMessage";
 
 const { cons } = getNamedLogs({ name: "ChatGateway" });
 

@@ -1,7 +1,6 @@
 import { createModel } from "@rematch/core";
 import { RootModel } from "./";
-
-export type ChatMessage = { who: string; msg: string; when: string };
+import { ChatMessage } from "../types/chatMessage";
 
 const initialChatState = {
   messages: [] as ChatMessage[],
